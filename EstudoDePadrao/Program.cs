@@ -11,7 +11,8 @@ criador
     .ComObservacoes("qualquer obs")
     .AdicionaAcao(new EnviadorDeEmail())
     .AdicionaAcao(new EnviadorDeSms())
-    .AdicionaAcao(new NotaFiscalDao());
+    .AdicionaAcao(new NotaFiscalDao())
+    .AdicionaAcao(new Multiplicador(3));
 
 NotaFiscal notaFiscal = criador.Constroi();
 
