@@ -8,7 +8,10 @@ criador
     .ComCnpj("23.456.789/0001-12")
     .ComItem(new ItemDaNota("Item de teste", 100))
     .ComItem(new ItemDaNota("Segundo item de teste", 200))
-    .ComObservacoes("qualquer obs");
+    .ComObservacoes("qualquer obs")
+    .AdicionaAcao(new EnviadorDeEmail())
+    .AdicionaAcao(new EnviadorDeSms())
+    .AdicionaAcao(new NotaFiscalDao());
 
 NotaFiscal notaFiscal = criador.Constroi();
 

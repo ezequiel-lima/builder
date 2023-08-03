@@ -10,6 +10,7 @@
         public string Observacoes { get; set; }
 
         public IList<ItemDaNota> Itens = new List<ItemDaNota>();
+        public IList<IAcaoAposGerarNota> TodasAcoesASeremExecutadas = new List<IAcaoAposGerarNota>();
 
         public NotaFiscalBuilder()
         {
@@ -17,10 +18,22 @@
             DataDeEmissao = DateTime.Now;
         }
 
+        public NotaFiscalBuilder AdicionaAcao(IAcaoAposGerarNota novaAcao)
+        {
+            TodasAcoesASeremExecutadas.Add(novaAcao);
+            return this;
+        }
+
         public NotaFiscal Constroi()
         {
-            
-            return new NotaFiscal(RazaoSocial, Cnpj, DataDeEmissao, ValorBruto, Impostos, Itens, Observacoes);
+            NotaFiscal notaFiscal = new NotaFiscal(RazaoSocial, Cnpj, DataDeEmissao, ValorBruto, Impostos, Itens, Observacoes);
+
+            foreach (var acao in TodasAcoesASeremExecutadas)
+            {
+                acao.Executa(notaFiscal);
+            }
+
+            return notaFiscal;
         }
 
         public NotaFiscalBuilder ParaEmpresa(string razaoSocial)
